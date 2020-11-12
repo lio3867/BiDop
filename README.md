@@ -2,9 +2,9 @@
 
 For having BiDop working:
 
-* clone the whole project : hg clone https://bitbucket.org/lc/bindings_extract
+* clone the whole project : git clone https://github.com/lio3867/BiDop
 * cd binding_extract
-* python -m Interf.run 
+* python -m Interf.run
 
 ### What is this repository for? ###
 
@@ -26,5 +26,5 @@ For having BiDop working:
 
 ### Who do I talk to? ###
 
-* lionel.chiron@casc4de.eu
+* lionel.chiron@gmail.com
 * Other community or team contact
