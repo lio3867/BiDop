@@ -1,0 +1,14 @@
+well , molec , group_with_index, BI
+last_well, B5
+B2 , Biotin_MAGI1_2_C, grp_1_3, ref 
+A1 , HPV16_E6_MAGI1_2_C, grp_1_0, 0.8908 
+A2 , HPV18_E6_MAGI1_2_C, grp_1_1, 0.8857 
+B1 , NONE_MAGI1_2_C, grp_1_2, 0.0654 
+B4 , Biotin_MAGI1_3_C, grp_2_3, ref 
+A3 , HPV16_E6_MAGI1_3_C, grp_2_0, 0.1075 
+A4 , HPV18_E6_MAGI1_3_C, grp_2_1, 0.3949 
+B3 , NONE_MAGI1_3_C, grp_2_2, 0.0631 
+B6 , Biotin_SCRIB_1_C, grp_3_3, ref 
+A5 , HPV16_E6_SCRIB_1_C, grp_3_0, 0.6948 
+A6 , HPV18_E6_SCRIB_1_C, grp_3_1, 0.0949 
+B5 , NONE_SCRIB_1_C, grp_3_2, -0.1576 

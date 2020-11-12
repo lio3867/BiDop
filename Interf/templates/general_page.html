@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% block head %}{% endblock %}
+
+<body  >
+    <!-- onLoad=" LoadOnce()" -->
+    <!-- Page Header -->
+{% include 'header.html' %}
+
+<div id="content">{% block content %}{% endblock %}</div>
+
+<h1></h1>
+   
+{% include 'footer.html' %}
+
+</body>
+</html>

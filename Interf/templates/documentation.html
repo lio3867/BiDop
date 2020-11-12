@@ -1,0 +1,32 @@
+<!-- Page for producing, selecting, erasing the html files -->
+
+{% extends "general_page.html" %}
+
+{% block head %}
+{% include 'head.html' %}
+{% endblock %}
+
+{% block content %}
+
+Here is the documentation about the Webapp !!! 
+
+<script>
+
+function typeOf (obj) {
+  return {}.toString.call(obj).split(' ')[1].slice(0, -1).toLowerCase();
+}
+
+var source = new EventSource('/stream');
+source.onmessage = function (event) {
+  var d = event.data; // id sent by server
+  var addr_pic_reshaped = "/static/img_analyzed/" + d ; // .toString();
+  document.getElementById(d.slice(0,-1)).src = addr_pic_reshaped;
+    }
+</script>
+
+
+
+<p style='padding-bottom:40px'> </p>
+
+{% endblock %}
+

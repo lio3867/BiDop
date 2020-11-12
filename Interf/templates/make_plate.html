@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Plate Groups Maker</title>
+
+{% include 'head.html' %}
+
+     
+<style>
+
+/*.well {
+  fill: #2f225d;
+  stroke: #afa2dc;
+}*/
+
+/*body {
+    background-color: #ccffcc;
+}*/
+
+.navbar {
+    background-color: #ffffff; /*#E6E6E6*/
+    box-shadow: 0.5em 0.5em 0.7em;
+}
+
+.well {
+  fill: #ffd9b3;
+  stroke: #ffd9b3;
+}
+
+.selected {
+  fill: #2f225d;
+  
+}
+
+.axis {
+  font: 10px sans-serif;
+}
+
+p {
+  font: 12px sans-serif;
+  margin: 0 0 2px 0;
+  padding: 0;
+}
+
+.clear-button {
+  font: 14px sans-serif;
+  cursor: pointer;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.brush .extent {
+  stroke: #fff;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
+
+    /*
+    Panel for the plate
+    */
+
+    div.div_plate {
+        position: fixed;
+        padding-left: 0px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        box-shadow: 0.5em 0.5em 0.7em;
+        top: 70px;
+        left: 0px;
+        height: 360px;
+        width : 600px;
+        background-color: #FFF;
+        font-size:85%;
+        /*opacity : 0.3;*/
+    }
+
+    /*
+    Panel for changing the type of the plate 96 or 384
+    */
+
+    div.type_plate {
+        position: fixed;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        box-shadow: 0.5em 0.5em 0.7em;
+        top: 150px;
+        left: 300px;
+        max-height: 500px;
+        background-color:#FFCC99; 
+        font-size:85%;
+    }
+    
+    /*
+    Panel to know if interaction with Plate is OK
+    */
+
+    div.interact {
+        position: fixed;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        box-shadow: 0.5em 0.5em 0.7em;
+        left: 20px;
+        top: 20px;
+        height: 40px;
+        width:  20px;
+        background-color:#008ae6; 
+        font-size:85%;
+    }
+
+    /*
+    Shortcut keys for interacting with visualization part.
+    */
+
+    div.shortcuts{
+         position: fixed;
+         padding-left: 20px;
+         padding-right: 20px;
+         padding-bottom: 20px;
+         padding-top: 20px;
+         box-shadow: 0.5em 0.5em 0.7em;
+         top: 400px;
+         left: 100px;
+         height:300px;
+         width:300px;
+         background-color:#ccffcc; 
+         font-size:100%;
+         overflow: scroll;
+        }
+   
+    /*
+    List wells with molecules
+    */
+
+    div.wellsmolec{
+        position: fixed;
+        padding-left: 10px;
+        padding-right: 30px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+        box-shadow: 0.5em 0.5em 0.7em;
+        top: 70px;
+        left: 650px;
+        max-height:600px;
+        max-width:420px;
+        background-color: #ffdb4d; 
+        font-size:85%;
+        overflow: scroll;
+        text-align: left;
+        }
+    
+    /*
+    List of the folders with processed data
+    */
+
+    p.italic {
+    font-style: italic;
+}
+
+    div.divhov{              /*Tooltip with molec name when hovering the wells*/
+        position: relative;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 10px;
+        padding-top: 5px;
+        box-shadow: 0.5em 0.5em 0.7em;
+        height:25px;
+        width:200px;
+        background-color: #ebebe0; 
+        text-align: center;
+        vertical-align: middle;
+        z-index: 80;
+        opacity: 0.9;
+        }
+
+    /*
+    Panel for making the groups
+    */
+
+    div.makegroups{
+        position: fixed;
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+        box-shadow: 0.5em 0.5em 0.7em;
+        top: 450px;
+        /*left: 120px;*/
+        left: 95px;
+        max-height:300px;
+        /*width:350px;*/
+        width:400px;
+        background-color: #ffffcc ; 
+        font-size:85%;
+        /*overflow: scroll;*/
+        text-align: center;
+        /*opacity: 0.01;*/
+        }
+
+    /*
+    Panel for showing elements in the current group
+    */
+
+    div.all_elem_grp{        
+        position: fixed;
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+        box-shadow: 0.5em 0.5em 0.7em;
+        top: 420px;
+        left: 95px;
+        max-height:50px;
+        width:400px;
+        background-color: #e6e6e6 ; 
+        font-size:85%;
+        /*overflow: scroll;*/
+        text-align: center;
+        opacity: 0.8;
+        }
+
+    /*
+    Context menu cell
+    */
+
+    div.ctxtcell{
+        position: relative;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 2px;
+        padding-top: 2px;
+        box-shadow: 0.5em 0.5em 0.7em;
+        height:25px;
+        width:200px;
+        background-color: #ebebe0; 
+        text-align: center;
+        z-index: 80;
+        opacity: 0.9;
+        }
+
+    .context-menu-item { min-height: 18px; background-repeat: no-repeat; background-position: 4px 4px; }
+    .context-menu-item.context-menu-icon-ref {
+            background-image: url("https://cdn4.iconfinder.com/data/icons/6x16-free-application-icons/16/OK.png")
+            }
+
+    .context-menu-item.context-menu-icon-green { padding: 4px 30px; }
+    .context-menu-item.context-menu-icon-green::before {
+          content: '';
+          display: inline-block;
+          background-image: url('/static/img/square-ios-app-512.png');
+          margin-left: 5px;
+          background-position: -145px -62px;;
+          width: 10px;
+          height: 10px;
+        }
+    .context-menu-item.context-menu-icon-violet { padding: 4px 30px; }
+    .context-menu-item.context-menu-icon-violet::before {
+          content: '';
+          display: inline-block;
+          background-image: url('/static/img/square-violet.png');
+          margin-left: 5px;
+          background-position: -145px -62px;;
+          width: 10px;
+          height: 10px;
+        }
+
+    .ui-icon[class*=" icon-"] {
+        /* Remove the jQuery UI Icon */
+        background: none repeat scroll 0 0 transparent;
+        /* Remove the jQuery UI Text Indent */
+        text-indent: 0;
+        /* Bump it up - jQuery UI is -8px */
+        margin-top: -0.5em;
+    }
+
+    .ui-button-icon-only .ui-icon[class*=" icon-"] {
+        /* Bump it - jQuery UI is -8px */
+        margin-left: -7px;
+    }
+
+    /* Allow use of icon-large to be properly aligned */
+    .ui-icon.icon-large {
+        margin-top: -0.75em;
+    }
+
+    /*icon Slack*/
+
+   .slack{ 
+      background-image: url('/static/img/Slack-icon-small.png');
+      background-position: left  bottom 16px;
+      background-repeat: no-repeat;
+      padding-left: 20px; /* Adjust according to image size to push text across. */
+    }
+
+</style>
+
+
+
+<body>
+
+
+
+<script>
+
+
+
+//alert('in make_plate')
+
+// namespace = '/info_wells';        // change to an empty string to use the global namespace
+// var addr_socket = 'http://' + document.domain + ':' + location.port + namespace
+// alert(addr_socket)
+// var socket = io.connect(addr_socket);
+// // Receiving 
+// socket.on('info_last_well', function(msg) {
+//         alert( '####### last well is ' + msg.last_well) // 
+//     });// end socket on
+
+// alert('passed socket')
+
+// 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/images/ui-icons_222222_256x240.png'
+// background-image: url("/static/img/green.png"); context-menu-item-
+// -145px -62px;
+
+
+ 
+//================ Nav bar
+
+var navbar = function(){   // Navbar containing link to Home, Processing, Slack.com etc..
+
+    $('body').html(function(){/*
+    <nav class="navbar navbar-light bg-faded ">
+       <ul class="nav navbar-nav">
+       <!-- home -->
+       <li class="nav-item active">
+        <a class="nav-link  " href="../select_proc_visu">  
+         <i class="fa fa-home fa-2x" aria-hidden="true"></i>
+           <span>Home</span>
+         </a>
+       </li>
+       <!-- visualisation -->
+       <li class="nav-item">
+         <a class="nav-link " href="../visu">
+         <i class="fa fa-eye fa-2x"  aria-hidden="true">  </i>
+           <span>Visualization</span>
+         </a>
+       </li>
+       <!-- processing -->
+       <li class="nav-item">
+         <a class="nav-link " href="../ask_param?choosefolder=1.+Processing">
+         <i class="fa fa-gear fa-2x" aria-hidden="true"></i>
+           <span>Processing</span>
+         </a>
+       </li>
+       <!-- Slack -->
+        <li class="nav-item">
+         <a class="nav-link slack" style="top:10px" href="https://holdupmsp.slack.com/messages/general/">
+            <span >  &nbsp &nbsp &nbsp Slack</span>
+         </a>
+       </li>
+     </ul>
+    </nav>
+    
+    */}.toString().slice(14,-3))
+}
+
+function shadeColor2(color, ratio_col) {   // Color Shading (used first for visu of the Binding Indices)
+    if(ratio_col<1){
+           //alert(ratio_col)
+           var f=parseInt(color.slice(1),16),t=ratio_col<0?0:255,p=ratio_col<0?ratio_col*-1:ratio_col,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
+    return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
+
+    }
+    else if((ratio_col>1)&(ratio_col<1.3)){  // little negative BI
+        return "#ffccb3"
+    }
+
+    else if((ratio_col>1.299)&(ratio_col<3)){  // very negative BI
+        return "#ff5c33"
+    }
+
+    else {
+        return "#ffffff"
+    }
+}
+
+
+navbar()  // Initialize navbar
+
+/*
+Main code for visualizing the datasets.
+*/
+
+var visualize = function(proc_folder){
+
+    //------------- Plate definitions 
+
+    size_rect = 10
+    plate = {'96':{'m': 8,'n': 12, 'spacing': 40, 'w': 500 , 'h': 300},
+                   '384':{'m':16,'n':24, 'spacing':25, 'w': 600 , 'h': 360}}   // Plate dimensions and spacings
+
+    //-------------- Color definition
+
+    col_biotine = 'yellow'
+    col_peptide = '#00ff99';
+    col_neutral =   '#ffd9b3' //
+
+    //---------------  Interaction with plate
+
+    extent = null;   // Brush extent
+    show_coord = false  // Show cell coordinates
+    root = '/static' 
+    if (proc_folder == 'processing_example'){
+        $('#processing_example').css({'color':'green'}) // coloring the folder with results at initialization
+    }
+
+    statekey = -1
+
+    //===================================================================== Simple markdown 
+
+        /*
+        Simple markdown used for providing informations to the user. 
+        It handles classical markdown list syntax.
+        */
+    
+        simple_md = function(text){ // mini markdown for the help
+            var all_text = text.split('\n')
+            var htm = $('<div/>')
+            var ul = $('<ul/>').css({'text-align':'left'})
+            for (i in all_text){  
+                var text_insert = all_text[i].trim().slice(1) // prepare text
+                if (all_text[i].match(/^\s{4}\*/)){    // detect list first level
+                    ul.append($('<li/>').text(text_insert))
+                    } // end if
+                if (all_text[i].match(/^\s{8}\*/)){  // detect list second level
+                        var interm1 = $('<ul/>').append($('<li/>').text(text_insert))
+                        ul.append(interm1)
+                        } // end if
+                if (all_text[i].match(/^\s{12}\*/)){  // detect list third level
+                        var interm2 = $('<ul/>').append($('<li/>').text(text_insert))
+                        interm1.append(interm2)
+                        } // end if
+                if (all_text[i].match(/\s*\#/)){ // detect #
+                    htm.append($('<h1/>').text(text_insert))
+                    } // end if
+            } // end for
+            htm.append(ul);
+            return htm.html()
+        } // end function
+
+    //------------------ Shortcut keys for the interface.
+
+    var keys = function(){/*
+    # Keys: 
+        * k : toggle keys
+        * c : toggle spectrum panel
+        * Esc : trigger the cases interactions
+            * e : push e after selection for having a red rectangle around brushed area.
+            * b : color the biotines
+            * p : color the peptides
+            * d : neutral color 
+            * a : show selected wells
+
+    */}.toString().slice(14,-3)
+
+
+    //------------ Plate
+
+    var div_plate = $('<div/>').addClass('div_plate') 
+    $('body').append(div_plate)
+
+    //---------------  plate selection
+
+    var opt = function(val){
+        return $('<option/>').text(val).attr('value',val)
+        }
+    var col1 = $('<div/>').attr('class',"col-sm-8")
+    var col2 = $('<div/>').attr('class',"col-sm-4")
+
+    var div_type_plate = $('<div/>').attr('class','type_plate')
+                                    .hide() // Element for modifying the plate.
+    var type_plate = $('<h3/>').css({'text-align':'left'})
+                               .text('type plate')
+    var sel_plate = $('<select/>').attr('id','select_plate')
+                  .attr('class','selectpicker')
+                  .attr('data-width','70px')
+                  .append(opt('384'))
+                  .append(opt('96'))
+    var type_usage = $('<h3/>').css({'text-align':'left'})
+                             .text('Usage')
+    var plate_usage = $('<select/>').attr('id','select_plate_usage')
+                .attr('class','selectpicker')
+                .attr('data-width','140px')
+                .append(opt('Plate designer'))
+                .append(opt('Analysis'))
+            
+    // var inp = $('<input/>').attr('size',5) //.attr('type','submit')
+    //                        .keypress(function(event) {
+    //                             if (event.keyCode == 13) {
+    //                             //alert('Domain is '+ $(this).val());
+    //                             }
+    //                         });
+
+    var command =  div_type_plate 
+                     .append(type_plate) // kind of plate 96 or 384
+                     .append(sel_plate)
+                        
+    //------------- Adding elements
+
+    $('body').append(command)
+
+    //-------------  Wells with molecules
+
+    $('body').append($('<div/>').attr('class','wellsmolec').attr('id','wellsmolec'))
+
+    //------------- Indicates if interaction with plate is on or off
+
+    $('body').append($('<div/>').attr('class','interact').attr('id','interact'))
+    $('#interact').hide()
+
+    //------------- Shortcuts
+
+    $('body').append($('<div/>').attr('class','shortcuts').attr('id','shortcuts'))
+    $('#shortcuts').html(simple_md(keys)).toggle()
+    $('#shortcuts').draggable()
+
+   //-------------  Make groups panel
+
+    $('body').append($('<div/>').attr('class','makegroups').attr('id','makegroups'))
+    $('body').append($('<div/>').attr('class','all_elem_grp').attr('id','all_elem_grp'))
+    // $('#all_elem_grp').click(function(){
+    //     if ($('#makegroups').css('top') == '150px'){
+    //         $('#makegroups').css({'top': '450px', 'opacity':'1'})
+    //     }
+    //     else{
+    //         $('#makegroups').css({'top': '150px', 'opacity':'0.01'})
+    //     }
+        
+    // })
+
+    //-------------  # Buttons for choosing the kind of plot
+
+    //--------------- Baseline
+
+    var button_baseline = $('<input/>').attr('type', 'button')
+                                .addClass('btn btn-default')
+                                .attr('value','baseline')
+                                .attr('id', "show_baseline")
+
+    //---------------- Dilation
+                                   
+    var button_dilation = $('<input/>').attr('type', 'button')
+                                .addClass('btn btn-default')
+                                .attr('value','dilation')
+                                .attr('id', "show_dilation")
+    
+    var title_ctrl = $('<p/>').text('Processings Controls').css({'text-align': 'center', 'font-size':'200%'})                            
+    /*
+
+    Click on well and show the dilation Bokeh plot.
+    In the same time it plugs buttons for passing from baseline to dilation and inversely.
+
+    */
+    
+    var selected_grp = '1' // group for beginning visualization
+
+/*
+From RGB to Hexadecimal
+Used for Binding Index colors
+*/
+
+function rgb2hex(rgb){
+    rgb = rgb.match(/[\s+]?\d+[\s+]?,[\s+]?\d+[\s+]?,[\s+]?\d+[\s+]?/i);
+    var r = parseInt(rgb[0].split(',')[0],10) 
+    var g = parseInt(rgb[0].split(',')[1],10) 
+    var b = parseInt(rgb[0].split(',')[2],10) 
+    var hex = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
+return hex
+}
+
+list_grp = {} // Dictionary for only one group each time, dic for all the groups is dic_group
+    
+    //-------- dotted line for current selected well
+
+    var dotted = function(d){
+            $('.well').each(function(){ 
+                $(this).css({'fill': $(this).attr('color'), "outline-style": "dotted", "outline-color": "#ffffff" }) // reinitialize color and dotted line
+               })  // 
+            $('#' + d[0]).css({"outline-style": "dotted", "outline-color": "#ff4d4d"}) // make a dotted line
+            // alert('in dotted')
+        }
+
+    var onclick_elem = function(d){
+        /*
+        onclick_elem, handles event when clicking wells etc..
+        d : information containing the cell on the plate, the name, the group number etc..
+        */
+
+        $('.selected').each(function(){
+            var newclass = $(this).attr('class').replace('selected','')
+            $(this).attr('class', newclass)
+          })
+        var dd = document.getElementById(d[0]);
+        dd.classList.add('selected')
+
+        //-------- Outline
+
+        dotted(d)  // Make dotted line around the well
+
+        //-------- Color name
+
+        $('.namemolec').css({'color': 'black'}) // color all molec names in black
+        $('#' + d[1].trim()).css({ 'color': 'red'}) // color the molecule name in red
+
+        //-------- Clean group when changing the index of the group
+
+        $("#grp_input").change(function() { // changing of group
+            list_grp = {}
+            $('.elem_grp').remove()
+            $('#num_grp').remove()
+            initial_plate_colors()
+          }) // end change
+
+        //-------- Reinitialize list_grp when checked is positive
+
+        $("#chckgrp").change(function() {
+            if ($('#chckgrp').is(':checked')) {
+                list_grp = {} // reinitialize the list_grp
+            } // end if
+          }) // end change 
+
+        //-------- When checked, permits to change color and class of wells
+
+        if ($('#chckgrp').is(':checked')) {
+            var index_grp = $('#grp_input').val().toString() // index of the current group
+            //alert(Object.keys(list_grp).length)
+            if (Object.keys(list_grp).length == 0){
+                    num_grp = $('<span/>').attr('id', 'num_grp').text('group n°'+index_grp+' : ')
+                    $('#all_elem_grp').append(num_grp)
+                }
+            var test_elem = list_grp.hasOwnProperty(d[0].toString()) // Check if elem is in the group
+            if (! test_elem){                                       // if not in the group.. 
+
+                $('#' + d[0]).css({'fill':'#cc0044'}) // color cell for showing it is in the group with interaction type.
+                var txtgrp = $('<span/>').text(d[0] + ', ').css({'color':'#000000'})
+                                      .attr('id','grp_' + d[0])
+                                      .addClass('elem_grp') // add element text molec to the current group
+                list_grp[d[0]] =  'molec' //  Adding new element to the group
+
+                //-------- Clicking on the text
+
+                txtgrp.click(function(){    // text clicked
+                    //alert('######### outline or not '+ $('#' + d[0]).css("outline-style"))
+                    // if ($('#' + d[0]).css("outline-style") !=  "dotted"){
+                    //     // alert("dotting the well !!!")
+                    //     dotted(d) // called when txtgrp is activated alone
+                    // }
+
+                    var hexcol = rgb2hex($(this).css('color'))
+                    //rgb2hex('rgb(0,0,0)')
+                    if (hexcol == '#000000'){       // ref
+                        //-------- Color reference
+                        $(this).css({'color':'#00cc99'}) // color for reference
+                        $('#'+ d[0]).css({'fill':'#00cc99'}) // color cell for reference
+                        $('#'+d[1].trim()).css({'color':'#00cc99'}) // color name for reference
+                        list_grp[d[0]] = 'ref'
+                     }
+                    else{                          // molec
+                        //-------- Color molec
+                        $(this).css({'color':'#000000'}) // text color for interactions
+                        $('#'+ d[0]).css({'fill':'#cc0044'}) // color of well with interactions
+                        $('#'+ d[1].trim()).css({'color':'#cc0044'}) // text color name for interactions
+                    }
+                  }) // end click
+                  $('#makegroups').append(txtgrp)
+                  $('#all_elem_grp').append(txtgrp)
+
+            } // if test_elem in group
+
+           } // end if checked
+        } // end onclick_elem
+
+    //=================================== #  list of molecules
+
+    //------------- Enter the theme
+   
+    var input_theme = $('<input/>').attr('type', 'input')
+                                .attr('value','')
+                                .attr('id', 'pattern_molec_input')
+                                .attr('name', 'pattern_molec_input') // necessary for .val()
+                                .css({'width':'120', 'margin-left':'30px'})
+    //input_theme.val('HPV')
+  
+    //-------------- Submit the theme
+
+    /*
+
+    List of the molecules
+    Plot are linked to click events on molecules names
+
+    */
+
+    var well2molec = {};      // dictionary for passing from well to molecule
+    var molec2well = {};      // dictionary for passing from molecule to well
+    var well2d = {}           // keeping the whole data d
+    
+    var sort_list_well_molec = 'asc' // Define the direction toward the bottom (so asc instead of desc)
+
+    var divhov = $('<div/>').addClass('divhov').hide() // Tooltip with molec name when hovering the wells
+    $('body').append(divhov)
+    // var numb_elem = 0
+
+      var make_list_molec = function(){
+        // alert('make list molec !!!!')
+        /*
+        Reads the csv file  /dict_well_molec.csv, and show the BIs
+        */
+
+        $('.molec').remove()
+        // $('.divhov').remove()
+
+        var dicw = root + "/dict_well_molec.csv" + '?random=' + new Date().getTime() ; // address of the file containing the correspondencies. 
+        $('.ordered_list_molec').remove()
+        var ol = $('<ul/>').addClass('ordered_list_molec')
+        patt = $('#pattern_molec_input').val()
+        // alert(patt)
+       
+      //------- Pass here the first time
+      var make_dic_well = function(dicw){
+          d3.text(dicw, function(data) {
+          var parsedCSV = d3.csv.parseRows(data, function(d, i){
+                //-----
+                well2molec[d[0]] = d[1].trim()
+                molec2well[d[1].trim()] = d[0]
+                well2d[d[0]] = d
+                if(d[0] == well2molec['last_well']){
+                     make_all_elems_plate()
+                }
+              }); // end parsedCSV
+            }); // end text
+          } // end make_dic_well
+
+        var make_elem_plate =  function(d){
+              // numb_elem += 1;
+              // alert(d[0])
+              // if (! $('#' + d[0]).hasClass('hovered')){
+                  $('#' + d[0]).hover(function(){ // show molecule interaction name when hovering
+                          var molname = $('<p/>').text(d[1].trim())
+                          divhov.empty()
+                          divhov.append(molname)
+                          divhov.css('left', 40 + parseInt($('#' + d[0]).attr('x'))) 
+                          divhov.css('top', parseInt($('#' + d[0]).attr('y'))) //-100
+                          if (!divhov.is(':visible')){
+							divhov.toggle()
+						    }
+                      })  // end hover
+                    //$('#' + d[0]).addClass('hovered')
+                  //}  // check is hover
+              //}
+            if (d[1].search(patt)!=-1 & (d[0].trim() != 'well') & (d[0].trim() != 'last_well')){  // search pattern in the input
+                // 
+                $('#' + d[0]).attr('class', 'well context-menu-well processed')     // add class processed 
+                //-------
+                var col =  '#ffb380'  // Color for wells not selected in groups
+                $('#' + d[0]).attr('stroke', col)  // conserving the color
+                $('#' + d[0]).css({'fill': col})     // color each case of the plate with diff intensities
+                //-------
+                var chckbox_listmolec = $('<input/>').attr('name', 'chckbx' + d[0])
+                         .attr('id', 'chckbx' + d[0])
+                         .attr('type', "checkbox").css({'left':'280px', 'top':'-30px'}) //.
+                var spanchckbx = $('<span/>').append(chckbox_listmolec)
+                var spancell = $('<span/>').text(' ' + d[0] + ' ').css({'color': 'grey'}) // Cell
+                var spanmolec = $('<span/>').attr('id', d[1].trim()).addClass('namemolec').text(d[1] + ' ').css({'color': 'black'}) // molec     
+                var line_molec = $('<p/>').addClass('molec')
+                                          .attr('idrefresh', 'name' )
+                                          .html($('<p/>').append(spanchckbx)
+                                                         .append(spancell)
+                                                         .append(spanmolec)
+                                                         )    
+                                          .click(function(){
+                                                onclick_elem(d)    // changing colors etc..
+                                        }) // end click
+                var li = $('<li/>').append(line_molec)
+                li.attr('idwell', d[0]).attr('idmolec', d[1].trim())
+                ol.append(li)
+                $('#wellsmolec').append(ol)
+                } // end if
+            else{
+                $('#' + d[0]).attr('class', 'well context-menu-well' ) // 
+                }
+        } // end make_elem_plate
+
+        // ------ Deals with all the elements of the plate
+
+        var make_all_elems_plate = function(){ // take each element of the plate and apply a processing.
+              for (w in well2molec){
+                    var d = [w, well2molec[w]]
+                    make_elem_plate(d)
+                    } //end for w in well2molec
+
+                    
+                } // end make_all_elems_plate
+
+		//---------	Trigger make_all_elems_plate if it is not yet done.
+		
+        if (well2molec['well'] != 'molec'){  // trick to check if the dictionary is or not yet done
+            patt = '' // initial pattern
+            make_dic_well(dicw);
+
+            }
+        else{
+            make_all_elems_plate()
+
+           } // end if well2molec['well'] != 'molec'
+      } // end make_list_molec
+
+    make_list_molec() // initialize molec 
+    // alert('helllo !!!!') 
+
+    var refresh_list_molec = function(){
+        patt = $('#pattern_molec_input').val()
+        make_list_molec()
+    }
+
+    var sort_active = {'background-color':'#ff9999'}
+    var sort_inactive = {'background-color':'#ffffff'}
+
+    // ------------- Sort by well
+
+    var submit_well_tsort= $('<input/>').attr('type', 'button')   // Select molecules with pattern  
+                                .addClass('btn btn-default')
+                                .attr('value','well')
+                                .attr('id', 'sort_well')
+                                .css({'margin-left':'100px'})
+                                .click(function(){
+	                                  $(this).css(sort_active)  // change color of button to active state
+	                                  $('#sort_molec').css(sort_inactive) // inactive state
+	                                  $('#span_molec_sort').html('')
+	                                  refresh_list_molec()              // refresh list and plate
+                                    // alert('check tinysort')
+                                    // $('ul.ordered_list_molec>li').each(function(){
+                                    //                       alert($(this).html())
+                                    //                      })
+	                                  tinysort('ul.ordered_list_molec>li', {order: sort_list_well_molec, attr:'idwell'});   // jQuery tinysort
+	                                  if (sort_list_well_molec == 'desc'){   // sorting in ascending mode
+		                                    sort_list_well_molec = 'asc'
+		                                    $('#span_well_sort').html('<i class="fa fa-arrow-up" aria-hidden="true"></i>')  // arrow up
+		                                  } // end if desc
+	                                  else{                                 // sorting in descending mode
+		                                    sort_list_well_molec = 'desc'
+		                                    $('#span_well_sort').html('<i class="fa fa-arrow-down" aria-hidden="true"></i>')  // arrow down
+		                                  } // end if asc
+                                })   // end click
+    var span_well_sort = $('<span/>').attr('id','span_well_sort') // span for arrow up and down
+
+    // ------------- Sort by molec
+
+    var submit_molec_tsort= $('<input/>').attr('type', 'button')   // Select molecules with pattern  
+                            .addClass('btn btn-default')
+                            .attr('value','molec')
+                            .attr('id', 'sort_molec')
+                            .css({'margin-left':'100px'})
+                            .click(function(){
+	                              $(this).css(sort_active)            // change color of button to active state
+	                              $('#sort_well').css(sort_inactive)  // inactive state
+	                              $('#span_well_sort').html('')
+	                              refresh_list_molec()                // refresh list and plate
+	                              tinysort('ul.ordered_list_molec>li', {order: sort_list_well_molec, attr:'idmolec'});  // jQuery tinysort
+								  // alert('sort_list_well_molec')
+	                              if (sort_list_well_molec == 'desc'){      // sorting in ascending mode
+										// alert('sorting in ascending mode')
+		                                sort_list_well_molec = 'asc'
+		                                $('#span_molec_sort').html('<i class="fa fa-arrow-up" aria-hidden="true"></i>')  // arrow up
+		                              }
+	                              else{                                     // sorting in descending mode
+		                                // alert('sorting in descending mode')
+										sort_list_well_molec = 'desc'
+		                                $('#span_molec_sort').html('<i class="fa fa-arrow-down" aria-hidden="true"></i>')  // arrow down
+		                              }
+                            }) // end click
+    var span_molec_sort = $('<span/>').attr('id','span_molec_sort') // span for arrow up and down
+
+    //------------
+
+    $('#wellsmolec').append(input_theme) // btn btn-default
+    $('#wellsmolec').append($('<br/>'))
+    // Sort by well
+    $('#wellsmolec').append(submit_well_tsort)
+    $('#wellsmolec').append(span_well_sort)
+    $('#wellsmolec').append($('<br/>'))
+    // Sort by molec
+    $('#wellsmolec').append(submit_molec_tsort)
+    $('#wellsmolec').append(span_molec_sort)
+    $('#wellsmolec').append($('<br/>'))
+    $('#wellsmolec').append($('<br/>'))
+    $('#wellsmolec').append($('<br/>'))
+
+        //-------- Initialization with right sorting order
+
+    var nbclick = 0
+
+    $('#sort_well').click(function(){
+       setTimeout(function() {
+              nbclick += 1
+              if (nbclick < 3){
+                  $('#sort_well').click()
+              }
+         }, 100); // end setTimeout
+      }); // end first click
+    $('#sort_well').click()
+
+    //======================  Plate Groups Maker
+
+    var input_group = $('<input/>').attr('type','input') // in put the index of the group
+                                .attr('value','1')
+                                .attr('id','grp_input')
+                                .css({'width':'20'}) 
+    var spancheck = $('<span/>').text('   make group ').css({'font-size':'100%'}) // 'margin-left':'-100px', 
+    //var divcheck = spancheck.append($('<span/>').addClass("checkbox col-sm-2")) // checkbox for groups
+     
+    chckbox_grp = $('<input/>').attr('name', 'checkgrp')
+                                 .attr('id', 'chckgrp')
+                                 .attr('checked','true')
+                                 .attr('type', "checkbox").css({'left':'280px', 'top':'-10px'}) //.css({'left':'180px'}) //, 'top':'-10px'
+    //spancheck.append(chckbox_grp) 
+    var divcheck = spancheck.append(chckbox_grp) 
+    dic_grps = {} // dictionary containing all the groups
+
+    //------------
+
+    var submit_grp = $('<button/>').attr('type', 'submit')             // Save the group in list_grp
+                                .addClass('btn btn-default')
+                                .attr('value','save group')
+                                .html('<i class="fa fa-floppy-o fa-1x" aria-hidden="true"> group </i>')
+                                .css({'background-color':'#00e6ac'})
+                                .click(function(){
+      	                                  index_grp = $('#grp_input').val().toString()
+	                                        dic_grps[index_grp] = list_grp
+	                                        for (namewell in list_grp){
+	                                            //alert(i)
+	                                            var cl = $('#' + namewell).attr('class')
+	                                            $('#' + namewell).attr('class', cl + ' grp_' + index_grp)   //addClass('grp_'+index_grp)
+	                                        }
+	                                        alert(JSON.stringify(dic_grps))
+                                        }) // end click
+    /*
+
+    Fill plate with initial colors
+
+    */
+    var initial_plate_colors = function(){
+        $('.well').each(function(){
+        var cl = $(this).attr('class')
+        // alert(cl)
+        if ( cl.match(/processed/g) ){
+            $(this).css({'fill':'#ffb380'}) // color for wells with interaction
+            //var newcl = cl.split(/\s+/).slice(0, -1).join(" ") // removing the group
+            //$(this).attr('class', newcl)
+            } // end if
+        else{
+            $(this).css({'fill': well_col}) // color for neutral wells (None, Biotin etc..)
+            }  // end else 
+        }) // end each well
+        $('.well').each(function(){ // refreshing dotted line
+                $(this).css({'fill': $(this).attr('color'), "outline-style": "dotted", "outline-color": "#ffffff" }) // reinitialize color and dotted line
+            })  // end each .well
+        }
+    /*
+
+    Clear the whole group
+
+    */
+
+    var clear_grp = $('<button/>').attr('type', 'submit')              //  Remove a group and clean the div
+                                .addClass('btn btn-default')
+                                .attr('value','clear group')
+                                .html('<i class="fa fa-trash-o fa-1x" aria-hidden="true"> group </i>')
+                                .css({'background-color':'#00e6ac'})
+                                .click(function(){
+                                        index_grp = $('#grp_input').val().toString()
+                                        delete dic_grps[index_grp]     // erase the current group
+                                        $('.elem_grp').remove()       // remove from div
+                                        $('#num_grp').remove()       // remove from div
+                                        initial_plate_colors()    // Restitute the initial colors of the plate.
+                                        alert(JSON.stringify(dic_grps))
+                                        list_grp = {}                  // reinitialize the dictionary
+                                        }) // end click
+    /*
+
+    Clear one element
+
+    */
+
+    var clear_grp_elem = $('<button/>').attr('type', 'submit') //  Remove a group element 
+                                .addClass('btn btn-default')
+                                .attr('value','delete elem')
+                                .html('<i class="fa fa-trash-o fa-1x" aria-hidden="true"> selected element </i>')
+                                .css({'background-color':'##ffcc66'})
+                                .click(function(){
+                                        index_grp = $('#grp_input').val().toString()
+                                        del_elem($('.selected'))
+                                        })
+
+    //------------ Save plate geometry
+
+    var input_name_geom = $('<input/>').attr('type','input') // in put the index of the group
+                            .attr('value','plate_geom_name.cfg')
+                            .attr('id','plate_grp_name_geom')
+                            .css({'width':'150', 'height':'35'}) 
+
+    var form_save_geom = $('<form/>').attr('action','/geom')
+                                     .attr('method','post')
+                                     .attr('id','form_save_geom') // Form for plate groups geometry
+
+
+
+    //------------ Button for saving the current group plate geometry
+
+    var info_geom = $('<input/>').attr('type', 'input')     //  infos about the plate groups geometry
+                        .attr('name','info_geom')
+                        .attr('id','info_geom')  
+
+    var save_geom = $('<input/>')  //.attr('type', 'submit')              //  Save the plate groups geometry
+                            .addClass('btn btn-default')
+                            .attr('value','save')
+                            .attr('name','save')
+                            .css({'width':'70', 'background-color':'#ff531a'}) 
+                            .click(function(){
+                                // var well2molec_sorted = sortOnKeys(well2molec);
+                                // alert(well2molec.A0)
+                                // alert(well2molec.A1)
+                                
+                                var dicgr = JSON.stringify(dic_grps)
+                                alert(dicgr);
+                                info_geom.attr('value', dicgr)
+                                alert(info_geom.attr('value'))
+                                $("#form_save_geom").submit()
+                            })                                          
+ 
+    form_save_geom.append(info_geom.hide())
+
+    //-------------
+
+    var numgrp = $('<span/>').text('n° group : ').css({'margin-left':'-20px', 'font-size':'100%'})
+                             .append(input_group)
+
+    var mg = $('#makegroups')
+    mg.append($('<br/>'))
+    mg.append(numgrp) // btn btn-default
+    mg.append(divcheck) // btn btn-default
+    mg.append($('<br/>'))
+    mg.append($('<br/>'))
+    mg.append(submit_grp)    // Submit
+    // mg.append($('<br/>'))
+    mg.append(clear_grp)     // Clear
+    //mg.append($('<br/>'))
+    //mg.append($('<div/>').text('element :'))
+    //mg.append($('<br/>'))
+    //mg.append( $('<p/>').html('<i class="icon-remove-sign"> hello </i>'))    //<i class="icon-remove-sign"></i> $('<i/>')
+    //mg.append($('<br/>'))
+    mg.append(clear_grp_elem)
+    mg.append($('<br/>')).append($('<br/>'))
+    mg.append(input_name_geom)
+    //mg.append($('<br/>'))
+    mg.append(save_geom)    // Save geom
+    mg.append(form_save_geom)    // form_save_geom
+    mg.append($('<br/>'))
+
+    var change_col_type = function(well){
+        var cl = well.attr('class')
+        //alert('class is ' + cl)
+        if ( ! cl.match(/processed/g) ){
+        //if (well.attr("class") != "well processed"){
+            well.css({'fill': well_col}) // orange light initial well
+            //alert('well not processed')
+            } // end if
+        else{
+            //alert('well processed')
+            well.css({'fill': '#ffb380'}) // orange dark initial well
+        }
+    }
+
+    var change_col = function(well){
+        //alert('change color')
+        if (! $('#chckgrp').is(':checked')) {      // protection against change
+            if(well.attr("class") == "well selected"){
+                    change_col_type($('.selected')) // keep the color
+                  }  // end if
+            else{
+                //alert('well not selected')
+                change_col_type(well)
+                } // end else
+            } // end if
+        } // end function
+
+    /*
+
+    Context menu (molec, ref, delete etc..)
+
+    */
+
+    //------------- Delete current selected well from group list
+
+    var del_elem = function(elem){                  
+        delete list_grp[elem.attr('id')]            // erase well from list_grp 
+        $('#grp_' + elem.attr('id')).remove()       // erase the current element from the div element
+        document.getElementById('chckgrp').checked = false;
+        change_col(elem)                            // return to initial color
+        document.getElementById('chckgrp').checked = true;
+    }
+
+    //------------- Defining Context Menu actions
+
+      $(function() {
+
+        $.contextMenu({
+            selector: '.context-menu-well', 
+            items: {
+                "molec": {name: "molec", icon: 'context-menu-icon context-menu-icon-violet', callback: function(key, opt){ // Set molec
+                    var d = [$(this).attr('id'), well2molec[$(this).attr('id')]]
+                    onclick_elem(d)
+                    if (list_grp[$(this).attr('id')] == 'ref'){   // change only if ref
+                        $('#grp_' + $(this).attr('id')).click()
+                        list_grp[$(this).attr('id')] = 'molec'
+                    }
+                  }},
+                "ref": {name: "ref", icon: 'context-menu-icon context-menu-icon-green', callback: function(key, opt){  // Set reference
+                    var d = [$(this).attr('id'), well2molec[$(this).attr('id')]]
+                    onclick_elem(d)
+                    if (list_grp[$(this).attr('id')] == 'molec'){  // change only if molec
+                        $('#grp_' + $(this).attr('id')).click()
+                        list_grp[$(this).attr('id')] = 'ref'
+                    }
+                  }},
+                "remove": {name: "Delete", icon: "delete", callback: function(key, opt){    // Delete current element
+                    del_elem($(this))
+                  }}
+            } // end items
+        }); // end contextMenu
+        
+    }); // end function for ContextMenu
+    
+    
+    //----------
+
+    // var divcheck_ref = $('<div/>').addClass("checkbox col-sm-2")
+    // divcheck_ref.append($('<input/>').attr('name', 'checkgrp_ref')
+    //                          .attr('id', 'chckgrp_ref')
+    //                          .attr('type', "checkbox").css({'left':'180px', 'top':'50px'}) ) 
+    // $('#makegroups').append(divcheck_ref)
+
+    /*
+
+    Draw the whole plate
+
+    */
+
+    var tr = function(w, h, ang){      // Translation and Rotation
+       ang = ang || 0
+       return "translate(" + w + ","+ h + ") rotate(" + ang + ")"
+        }
+
+    var add_html = function(node, htm, w, h, ang){ // adding html in the plot
+        var htmnode = node.append('foreignObject')
+            .attr("transform", tr(w-100, h, ang))
+            .attr('width', 50)
+            .attr('height', 50)
+            .append("xhtml:body")
+            .html(htm)
+        return htmnode
+        }
+
+    var make_plate = function(m, n, spacing){  
+        /*
+
+        m : number of lines
+        n: number of columns
+        spacing  : spacing between wells
+
+        */
+
+        well_col =  '#ffd9b3'        //   Color for reference cell None, Biotin etc.. 
+        offsety = 0.75               // offset for last blocks not touching the bottom edge in y
+        offsetx = 0.25               // offset for the blocks on the left not touching the edges in x
+        var data = [];               // list contianing the coordinates of the wells. 
+        for (var i = 0; i <= m*n-1 ; i++) { // make the position of the wells
+            data.push({xcoord: i%n+offsetx, ycoord: Math.floor(i/n)+offsety});
+            }// end for
+        // var shift_left = 25
+
+        //---------------------
+
+        var margin = {top: 40, right: 20, bottom: 60, left: 40},
+            width = n*spacing - margin.left - margin.right,
+            height =  m*spacing - margin.top - margin.bottom;
+
+        var x = d3.scale.linear()
+            .range([0, width])
+            .domain([0, n]);
+
+        var y = d3.scale.linear()
+            .range([height, 0])
+            .domain([0, m]); 
+
+        var brush = d3.svg.brush()
+            .x(x)
+            .y(y)
+            .on("brush", brushmove)
+            .on("brushend", brushend);
+
+        var svg = d3.select(".div_plate").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .attr('class','plate')
+          .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        // Rows and columns numbering
+        //shift_left
+
+        for(i=0; i<m; i++){                // lines numbering
+          var letter = String.fromCharCode(65+i)
+          add_html(svg,'<p>' + letter + '</p>', margin.left + 40, (i+1-offsety)*height/m)
+        }
+        for(i=0; i<n; i++){               // columns numbering
+          var j= i+1
+          add_html(svg,'<p>' + j + '</p>',(i+offsetx)*width/n+margin.left + 60, margin.top-55)
+        }
+        
+        //---------------
+
+        svg.append("g")
+            .attr("class", "brush")
+            .call(brush)
+          .selectAll('rect')
+            .attr('height', height);
+
+        svg.append("defs").append("clipPath")
+            .attr("id", "clip")
+          .append("rect")
+            .attr("width", width)
+            .attr("height", height + 20);
+
+        wells = svg.selectAll(".well")
+            .data(data)
+            .enter().append("rect")
+            .attr("class", "well")
+            .attr("clip-path", "url(#clip)")
+            .attr("height", size_rect)
+            .attr("width", size_rect)
+            .attr("x", function(d) { return x(d.xcoord); })
+            .attr("y", function(d) { return y(d.ycoord); })
+            .attr("id", function(d){
+              var xcorr = d.xcoord+1-offsetx;
+              var ycorr = m-d.ycoord-1+offsety;
+              return String.fromCharCode(65+ycorr)+ xcorr
+            })
+            
+        /*
+               Interaction with wells
+        */
+
+        //================================  click on well and show spectrum
+
+        // $('.well').click(function(){
+        //     if (show_coord){
+        //         var id = $(this).attr("id");
+        //             if (typeof(id)=='string'){
+        //                 //alert(id)  // show coordinate of the well clicked.
+        //                 $('#ctrl').children('iframe').attr('src', 'data/'+id + '.html')
+        //                 //$('#ctrl').toggle()
+        //               } // end if
+        //        } // end if show_coord
+
+
+       $('.well').click(function(){      // click on well
+           var id = $(this).attr("id");
+           //alert(id)  root + 
+
+           d3.text(root +"/dict_well_molec.csv", function(data) {
+               var parsedCSV = d3.csv.parseRows(data, function(d, i){
+                   
+                   if (id == d[0].trim()){
+                        onclick_elem(d)
+                      } // end if
+                 }); // parseRows
+             }); // end d3.text
+         
+           // if (show_coord){
+           //     var id = $(this).attr("id");
+           //         if (typeof(id)=='string'){
+           //             //alert(id)  // show coordinate of the well clicked.
+           //             $('#ctrl').children('iframe').attr('src', 'data/'+id + '.html')
+           //             //$('#ctrl').toggle()
+           //           } // end if
+           //    } // end if show_coord
+    
+       /*
+
+       Change well color
+
+       */
+
+       change_col($(this))
+
+        }) // end click
+    
+        //============= Brush tool
+
+        function brushmove() {
+          extent = brush.extent();
+          wells.classed("selected", function(d) {
+            is_brushedx = extent[0][0]-0.5 <= d.xcoord && d.xcoord <= extent[1][0];
+            is_brushedy = extent[0][1]+0.5 <= d.ycoord && d.ycoord <= extent[1][1];
+            is_brushed = is_brushedx && is_brushedy;
+            return is_brushed;
+          });
+        }
+        //---------- Brush end
+
+        function brushend() {
+          reset_axis();
+          wells.classed("selected", false);
+          d3.select(".brush").call(brush.clear());
+        }
+
+        //------------
+
+        function reset_axis() {
+          svg.transition().duration(500)
+           .select(".x.axis")
+           .call(xAxis);
+        }
+        //------------ Brush selected area
+   
+        function domext_int(x, y, extent) {
+            x1 = Math.round(x(extent[0][0])); x2 = Math.round(x(extent[1][0])) // x1, x2
+            y1 = Math.round(y(extent[0][1])); y2 = Math.round(y(extent[1][1]))  // y1, y2
+            return [x1,x2,y1,y2]
+        }
+
+    /*
+
+    Keys events
+
+    functionnalities:
+        * k: show the keys for interaction with the page.
+        * c: toggle control panel contianing the processing plots
+        * t: toggle interaction with the Plate
+        * e: rectangle around the selected wells
+        * b: if toggled pemits to color cases in yellow
+        * p: if toggled pemits to color cases in green
+        * d: deactivate color for peptides and biotine
+        * a: make an alert on the selected wells
+
+    */
+
+        var keyev = function(key, event){
+            return (event.keyCode == key.charCodeAt(0)-32 )
+          }
+      
+          $(document).keydown(function(event){   
+          
+            //------------------ Toggle Control plots
+          
+             if(event.keyCode == 27){         // Trigger statekeys with Esc
+                   statekey *= -1
+                   $('.interact').toggle()
+                 } // end if
+
+            //------------------ Toggle type of plate
+          
+              if(keyev('t', event)){    //
+                  $('.type_plate').toggle()
+                } // end if key code
+          
+            //------------------ Toggle Shortcuts
+          
+              if(keyev('k', event)){    //
+                  $('#shortcuts').toggle()
+                } // end if key code
+            
+            //------------------ Toggle Control plots
+          
+              if(keyev('c', event) && statekey == 1){    //
+                  $('#ctrl').toggle()
+                } // end if key code
+
+            //------------------ red rectangle around selected wells
+
+              if(keyev('e', event) && statekey == 1){    //
+                  //alert(extent);
+                  listcoord = domext_int(x,y, extent)
+                  x1 = listcoord[0]; x2 = listcoord[1];
+                  y1 = listcoord[2]; y2 = listcoord[3];
+
+                  svg.append("rect")
+                     .attr("x", function(){return x1})
+                     .attr("y", function(){return y2})
+                     .attr("width", function(){return Math.abs(x1-x2)})
+                     .attr("height", function(){return Math.abs(y1-y2)})
+                     .style("stroke","red")
+                     .style("fill","red")
+                     .style('opacity', .15)
+                } // end if key code 
+
+            //------------------ Color wells for biotine
+
+              if(keyev('b', event) && statekey == 1){    // color for biotine
+                    well_col = col_biotine
+                } // end if key code 
+
+            //------------------ Color wells for peptide
+
+              if(keyev('p', event) && statekey == 1){    // color for peptide
+                    well_col = col_peptide
+                } // end if key code   
+
+            //------------------ Basic color
+
+              if(keyev('d', event) && statekey == 1){    // deactivate biotine and peptide.
+                    well_col = col_domain
+                } // end if key code  
+
+            //------------------ show all brush selected wells 
+
+              if(keyev('a', event) ){    // show selected wells  && statekey == 1
+                  //alert('searching selected')
+                  $('.selected').each(function(){
+                      var id = $(this).attr("id");
+                      if (typeof(id)=='string'){
+                          alert(id)
+                        } // end if
+                    })// end each            
+                } // end if key code       
+          }) // end keydown
+      
+          var dim = {}
+          dim['width'] = width
+          dim['height'] = height
+          return dim
+
+    } // end make_plate
+
+    //=========================  Initialization of the plate
+
+    var m = plate['384']['m'];
+    var n = plate['384']['n'];
+    var spacing = plate['384']['spacing'];
+    make_plate(m, n, spacing) // initialization of the plate
+
+    // //$('#A1').addClass("context-menu-well") // context menu for one cell
+    // alert($('#A1').css('stroke'))
+    // //$('#A1').addClass("context-menu-well")
+    // alert($('#A1').attr('class'))
+    // var newclass = $('#A1').attr('class')+ " context-menu-well"
+    // alert(newclass)
+    // $('#A1').attr('class', newclass) //  addClass("ooooo")
+
+    $('#select_plate_usage').change(function() { // select between analysis and designer
+        $('#plate_usage').text($(this).val())
+    })// end change
+
+    /*
+    Panel for selecting the type of plate.
+    */
+
+    $('#select_plate').change(function() {     // select a plate 96 or 384
+          d3.selectAll('.plate').remove()
+          pl = $(this).val()
+          var m = plate[pl]['m'];   // number of lines
+          var n = plate[pl]['n'];   // number of columns
+          var spacing = plate[pl]['spacing']; // spacing between wells
+          var dim = make_plate(m, n, spacing)  // draw the plate
+          $('.div_plate').css({'width': plate[pl]['w'],'height': plate[pl]['h']})
+          var width_plate = $('.div_plate').width()
+          var height_plate = $('.div_plate').height()
+          //alert(width_plate)
+          var shift0 = width_plate + 40 + 'px'   // left shift for ctrl and change plate
+          var shift1 = width_plate + 530 + 'px'   // for dicwells
+          var shift2 = height_plate + 110 + 'px' // vertical shift
+          //alert(shift2)
+          //divonside.css({'left': shift0})
+
+          $('#ctrl').css({'left': shift0}) // Position of the control plot
+          $('#wellsmolec').css({'left': shift1}) // Position of dic wells
+          $('#shortcuts').css({'top': shift2}) // Position of shortcuts
+          $('.list_proc').css({'top': shift2, 'width': width_plate*0.75}) //width(width_plate*0.75)
+          // alert(plate[pl]['w'])
+          // $('.div_plate').css({'width': 100,'height': 50})
+          if (!$('#ctrl').is(":visible")){
+              $('#ctrl').toggle()
+          }
+        })// end change
+
+} // end visualize
+
+visualize('processing_example') // Initializing
+
+$(document).ready(function () {
+    // Scroll
+    lscrolls = ['shortcuts', 'wellsmolec'] //, 'makegroups'
+    for (i in lscrolls){
+        Ps.initialize(document.querySelector('#'+lscrolls[i]))
+    }
+});
+
+</script>
+
+</body>

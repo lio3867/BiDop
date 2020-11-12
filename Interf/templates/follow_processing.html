@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Follow the processing with a progress bar -->
+
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Casc4de">
+
+    <title>binding_extract</title>
+
+<!-- scripts -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+    
+  <!-- Favicon -->
+  <link rel="icon" 
+        type="image/jpg" 
+        href="/static/img/binding.ico">
+        
+<!-- css -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/first_page/clean-blog.css">
+    <link href="/static/first_page/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="/static/first_page/css.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    
+    <script>
+        $(document).ready(function(){
+            // io.set('log level', 1);
+            // alert('document is ready')
+            $('.alertend').hide()
+            namespace = '/follow_proc';        // change to an empty string to use the global namespace
+            var socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
+            // Receiving 
+            socket.on('follow', function(msg) {
+                    var sd = msg.data[0].split('/') // sent directory
+                    var progress = Math.round(parseInt(sd[0])/parseInt(sd[1])*100) // progression of the processing
+                    var percent = progress+'%'                                     // percentage done
+                    // alert('receiving message')
+                    if (progress >= 100){
+                        $('.alertend').show();
+                        $('.infos').show();
+                        var messend = $('<ul/>').append($('<li/>').text('time elapsed : '+ msg.time + ' min'))
+                                                .append($('<li/>').text('nb groups processed : '+ msg.data))
+                        $('.infos').html(messend);            // show end message
+                        socket.emit('message', "processed");
+                        }
+                    $('#prgbar').css({'width': percent});    // changing the length of the progressbar
+                    $('#percent').text(percent);             // text showing the percentage of processings done
+                    $('#time_left').text("estimated time before the end : " + Math.round(msg.time_left*100)/100 + " minutes");
+                    
+                });// end socket on
+        });// end document ready
+    </script>
+      
+</head>
+
+<style>
+
+/*
+Main panel with all the element for following the processing
+It contains the progressbar, the final messages, the indication of the percentage of processings done.. etc..
+*/
+
+div.proc{
+    position: fixed;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    box-shadow: 0.5em 0.5em 0.7em;
+    top: 200px;
+    left: 50%;
+    margin-left: -350px;
+    height: 340px;
+    width: 700px;
+    background-color: #ddffcc;
+    font-size:85%;
+    font-color:#fff;
+    }
+
+/*
+Message to says it is finished
+This message asserts the processings are all finished.
+*/
+
+div.alertend{
+    position: fixed;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    box-shadow: 0.5em 0.5em 0.7em;
+    top: 220px;
+    left: 50%;
+    margin-left: -100px;
+    height: 100px;
+    width: 200px;
+    background-color: #F7BE81;
+    font-size:85%;
+    z-index: 10;
+    transform:rotate(5deg);
+    }
+
+/*
+Infos about the processing
+*/
+
+div.infos{
+    position: fixed;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    padding-top: 40px;
+    box-shadow: 0.5em 0.5em 0.7em;
+    top: 350px;
+    left: 50%;
+    margin-left: -60px;
+    height: 130px;
+    width: 340px;
+    background-color: #ddcccc; 
+    display: none;
+    z-index: 10;
+    font-size: 16px;
+    z-index: 8;
+    }
+
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <!-- Page Header -->
+    {% include 'header.html' %}
+    <!-- Page Body-->
+    
+    <div class='alertend'> 
+        <p style="text-align: center; font-size: 20px;"; >Finished !!!</p>
+    </div>
+    <div class='infos'> 
+        <p style="text-align: center; font-size: 20px;"; ></p>
+    </div>
+    
+    <div class="proc">
+        <div class="container">
+             <h3 class=" col-sm-12" > Progress </h3>
+             
+    <!--  Progress bar -->
+
+              <div class="col-sm-6">
+                  <div class="progress progress-striped">
+                    <div id="prgbar" class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                    </div> <!-- div progressbar -->
+                  </div> <!-- div progress -->
+               </div>  <!-- div col-sm-6 -->
+
+    <i class="fa fa-cog fa-spin fa-3x fa-fw" style="line-height : 20px" aria-hidden="true"></i>
+    
+    <!--  Percent of the processing done-->
+        
+               <div id='percent' class="col-sm-6">0%</div>
+
+               </br>
+               <div class="col-sm-12"></div>
+               
+    <!-- Go to visualization of the processed dataset -->
+
+               <div class="container">
+                   <h1> </h1>
+                   <form action="/visu" method="post">
+                   <input name="chosedataset" style="font-size:90%" type="submit" class="btn btn-default" value = "Visualization">
+                   </form>
+               </div>
+
+               </br>
+
+      <!-- Shut down the interface -->
+
+               <div class="container">
+                   <h1> </h1>
+                   <form action="/shutdown" method="post">
+                   <input style="font-size:70%, bottom:20px" type="submit" class="btn btn-default" value = " Quit" >
+                   </form>
+               </div>
+
+        <!--  Time left -->
+                </br>
+               <div id='time_left' class="col-sm-6">time_left</div>
+
+
+               
+        </div>  <!-- div container -->
+    </div>  <!-- end div proc-->
+    
+    <!-- Footer -->
+    {% include 'footer.html' %}
+</body>
+</html>
+

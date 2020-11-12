@@ -1,0 +1,484 @@
+<!-- Chose the processing parameters -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'head_firstpage.html' %}
+ <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+
+<script src="/static/js/tooltips.js"></script>
+
+
+<style>
+
+p {
+  font: 12px sans-serif;
+  margin: 15 0 2px 0;
+  padding: 0;
+}
+
+/*
+Main Panel for setting the main parameters
+Folder address and groups
+*/
+
+div.params{
+    position: fixed;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    /*box-shadow: 0.5em 0.5em 0.7em;*/
+    top: 270px;
+    left: 30%;
+    margin-left: -250px;
+    height: 200px;
+    width: 500px;
+    background-color: #ffffff;  /*#ddffcc; */
+    font-size:85%;
+    }
+
+/*
+Panel for setting the optionnal parameters
+Make Bokeh, baseline parameters etc.. 
+*/
+
+div.params_options{
+    position: fixed;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    box-shadow: 0.5em 0.5em 0.7em;
+    top: 50px;
+    left: 90%;
+    margin-left: -290px;
+    /*height: 770px;*/
+    height: auto;
+    width: 270px;
+    background-color: #F6E3CE; 
+    font-size:85%;
+    /*z-index: 15;*/
+    }
+
+/*
+Options
+*/
+
+div.options{
+    position: fixed;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    box-shadow: 0.5em 0.5em 0.7em;
+    top: 50px;
+    left: 90%;
+    margin-left: -290px;
+    /*height: 770px;*/
+    height: auto;
+    width: 270px;
+    background-color: #b3d9ff; 
+    font-size:85%;
+    z-index: 15;
+    }
+
+/*
+Panel to show the name of selected folder when hovered.
+*/
+
+div.dataset{
+    position: fixed;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    box-shadow: 0.5em 0.5em 0.7em;
+    top: 290px;
+    left: 30%;
+    margin-left: -10px;
+    height: 40px;
+    max-width: 1600px;
+    background-color: #ddffcc; 
+    font-size:85%;
+    display: none;
+    font-size: 16px;
+    text-align: center;
+    /*z-index: 20;*/
+    }
+
+/*
+Tooltips for explanations
+*/
+
+div.divttip{              
+    position: fixed;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    box-shadow: 0.5em 0.5em 0.7em;
+    width:200px;
+    background-color: #ebebe0; 
+    text-align: left;
+    z-index: 50;
+    opacity: 0.9;
+    }
+
+.choosefolder:hover ~ .dataset{
+    background-color: #ddcccc;
+    display : block;
+    }
+/*.checkbox{
+    line-height:32px;
+    line-height: 50%;
+}
+*/
+
+.carousel {
+  z-index: 50;
+}
+
+</style>
+
+<body>
+
+    <!-- Page Header -->
+    {% include 'header.html' %}
+    <!-- Page Body-->
+
+
+
+    <div class="params">
+        <div class="container">
+            
+
+            <!-- Folder -->
+
+            <div class='choosefolder'>
+                <form action="/ask_data" method="post">
+                    <input name="choosefolder" style="font-size:70%" type="submit" class="btn btn-default col-sm-2" value = "Dataset">
+                </form>
+            </div>
+            <div class='dataset'> dataset : {{data_folder}} </div>
+            <!-- <input name="addr" style="font-size:70%; left:100px" type="submit" class="btn btn-default col-sm-1" value = "address"> -->
+            <h1 class=" col-sm-12" >    </h1>
+
+            
+            <form id="make_plate" action="/make_plate" method="post"></form>
+            
+            <!-- Various functions -->
+
+            <form action="/processing" method="post">
+
+              
+
+         <input name="valid" style="font-size:70%; left:300px; color:#ff9933; top: 100px" type="submit" class="btn btn-default col-sm-2" value = "validate">
+
+         <!-- Go to options (click for showing the parameters) -->
+
+          <!-- <h12 class=" col-sm-12" >    </h12> -->
+
+         <i class="fa fa-bars" id='proc_options' style='margin-left:-130px; font-size:120%; margin-top: 100px; ' aria-hidden="true"> Parameters  </i>
+
+        <!-- Processing options -->
+
+        </div> <!-- end div container -->
+    		</div>  <!-- end div params -->
+
+                <div class="params_options" hidden id="options" id='params_options'>
+                   <div class="container">
+
+        <!-- New plate -->
+
+                <input id= "butt_makeplate" name="makeplate" style="font-size:70%"  class="btn btn-default col-sm-2" value = "Define plate">
+                <h6 class=" col-sm-12" >    </h6>
+                <br/>
+                <input id= "butt_loadplate" name="loadplate" style="font-size:70%"  class="btn btn-default col-sm-2" value = "Load plate">
+                <h6 class=" col-sm-12" >    </h6>
+                <br/>
+
+
+            <!-- Select groups -->
+
+                <h4 class=" col-xs-1" style="top:-15px; position: relative" > Groups </h4>
+
+                <h12 class=" col-sm-12" >   </h12>
+
+                <div class="col-sm-2 ttip">
+                    <input id = 'groups' ttname = 'groups to be processed' name = 'groups' class="form-control " placeholder="all or 1-3; 7-9" type="text" value = "all or 1-3; 7-9" style="margin-left:0px; margin-top:-20px">
+                </div>
+
+                <h12 class=" col-sm-12" >   </h12>
+
+            
+	                <!-- Wells -->
+
+                    <h4 class=" col-xs-2"  > Wells in group: </h4>
+                    
+                    <div class="col-sm-1 ttip" style='margin-left: -10px'> <!-- <h5> element to process in group : </h5> -->
+                        <input ttname = 'elements in the group' name = 'elems'  class="form-control" placeholder="0-2" type="text"  style='margin-left: -10px; width:50px' value = {{range_elems}} >
+                    </div>
+
+                    <h12 class=" col-sm-12" >   </h12>
+
+                    <!-- Baseline -->
+
+	                <h4 class=" col-sm-2" > Baseline : </h4>
+                    <h12 class=" col-sm-12" >    </h12>
+
+                        <!-- Iterations -->
+
+    	                <div class="col-xs-1 "><h5 > iter </h5>
+                            <span class="ttip">
+    	                       <input ttname = 'number of iterations' name = 'iter' class="form-control parambl" placeholder="2" type="text" value = {{iter}} >
+                            <span/>
+    	                </div>
+
+                        <!-- chunks -->
+
+    	                <div class="col-xs-1 ttip" style="margin-left: -30px" ><h5 > # seg </h5>
+                            <span class="ttip">
+    	                         <input  ttname = 'number of chunks'  name = 'chunks'  class="form-control parambl" placeholder="50" type="text" value = {{chunks}}>
+                            <span/>
+    	                </div>
+
+                        <!-- Speed of convergence aka 2nd power -->
+
+                        <div class="col-xs-1 ttip" style="margin-left: -30px"><h5 > speed </h5>
+                            <span class="ttip">
+                                 <input ttname = 'convergence speed' name = 'speed'  class="form-control parambl" placeholder="5" type="text" value = {{speed}}>
+                            <span/>
+                        </div>
+
+                    <!-- <hr>  -->
+
+                     <!-- Ranges -->
+
+                    <h12 class=" col-sm-12" >    </h12>
+                    <h4 class=" col-sm-2" > Ranges : </h4>
+                    <h12 class=" col-sm-12" >    </h12>
+
+                        <h5 class="col-sm-1" > Normalizing: </h5>
+                        <div class="col-xs-2 ttip" style="margin-left: 10px">
+                            <input ttname = 'range normalization' name = 'range_norm' class="form-control range" placeholder="2" type="text" value = {{range_norm}} >
+                        </div>
+                        <!-- "8-17" -->
+
+                        <h12 class=" col-sm-12" >    </h12>
+
+                        <h5 class="col-sm-1"> Analysis:</h5>
+                        <div class="col-xs-2 ttip" style="margin-left: 10px">
+                            <input ttname = 'range analysis' name = 'range_analysis' class="form-control range " placeholder="2" type="text" value = {{range_analysis}} >
+
+                        </div>
+
+                  <h12 class=" col-sm-12" >    </h12>
+                  <h12 class=" col-sm-12" >    </h12>
+                  <h12 class=" col-sm-12" >    </h12>
+
+            <input id="options_inside" style="font-size:70%; left:0px" class="btn btn-default col-sm-2" value = "show options">
+
+            <div class='options'>
+
+                    <h12 class=" col-sm-12" >    </h12>
+                  <!--   <h4 class=" col-xs-6" style="top:-15px; position: relative" > Groups : </h4> -->
+                     <h4 class=" col-xs-6"  > Options : </h4>
+                    <!-- <h4 class=" col-sm-4" > Options : </h4> -->
+                    <h12 class=" col-sm-12" >    </h12>
+
+                    <!-- Vertical dilation (Vertical correction by dilation)  -->
+                  
+                    <div class="checkbox col-xs-4" style="margin-left: 20px">
+                        <h5 style="margin: 0; padding 0;  height:13px"><input style="line-height: 10%" name = 'verticalcorr' type="checkbox" > Vertical dilation</h5>
+                    </div>
+
+                    <h12 class=" col-sm-12" >    </h12>
+
+                    <!-- Range Vertical dilation -->
+
+                    <h5 class="col-sm-6" > Range y dilation </h5>
+
+                     <div class="col-xs-2 ttip">
+                            <input ttname = 'range second correction' name = 'range_y_adjust' class="form-control range " placeholder="2" type="text" value = {{range_y_adjust}} >
+
+                    </div>
+
+                    <!-- Peptides Identifiers -->
+
+                    <h12 class=" col-sm-12" >    </h12>
+                    <h5 class="col-sm-6" > Pep_Id </h5>
+                     <div class="col-xs-2 ttip" >
+                            <input  id='pepidentif' ttname = 'pepidentif' name = 'pepidentif' class="form-control" placeholder="" type="text" value = {{pepidentif}} >
+
+                    </div>
+                   
+                     <!-- bokeh plot -->
+
+                     <!-- Make the Bokeh plot or only the pickles -->
+
+                     <h12 class=" col-sm-12" >    </h12>
+                    
+                    <div class="checkbox col-xs-12" style="margin-left: 20px">
+                        <h5 style="margin: 0; padding 0;  height:13px" ><input style="line-height: 10%" name = 'makebokeh' type="checkbox" checked> Make Bokeh</h5>
+                    </div>
+
+                    <h12 class=" col-sm-12" >    </h12>
+
+                    <!-- Automatic ranges -->
+                    
+                    <!-- Automatic determination of the intervals -->
+              
+                    <div class="checkbox col-xs-12" style="margin-left: 20px">
+                        <h5 style="margin: 0; padding 0;  height:13px"><input style="line-height: 10%" name = 'automrange' type="checkbox" > Automatic range</h5>
+                    </div>
+
+                    <h12 class=" col-sm-12" >    </h12>
+
+                    <!-- Name processing -->
+
+                    <h5 class="col-sm-10"> Processing name : </h5>
+                    <h12 class=" col-sm-12" >    </h12>
+                        <div class="col-xs-6 ttip" style="margin-left: 40px">
+                            <input ttname = 'Processing name' name = 'name_processing' id = 'name_processing' class="form-control "  type="text"  >
+                        </div>
+
+                    <!-- tooltips activate -->
+
+                      <h12 class=" col-sm-12" >    </h12>
+                       
+                      <div class="col-xs-6 ">
+                        <br/>
+                         <a   id='trig_ttip'  >
+                         <i class="fa fa-comment fa-2x" aria-hidden="true"></i>
+                            <span id='text_tolltips'> Tooltips </span>
+                         </a>
+
+                     </div>  
+             </div >    <!-- end div options -->
+
+       <!-- create div for tooltips -->
+
+            <div class='divttip' id='ttip'> ttip </div>
+                   
+           </div>  <!-- end container -->
+
+        </div>  <!-- end div params_options -->
+
+    </form>
+    
+    <h1 class=" col-sm-12" >    </h1>
+
+    <div id = 'tt_name_processing' hidden>
+           Enter here the name for the experiment. 
+           Notice that you can enter it after the processing.
+    </div>
+
+    <div id = 'tt_range_analysis' hidden>
+           Range used for the calculation of the Binding Index. 
+    </div>
+
+    <div id = 'tt_range_norm' hidden>
+           Range used for normalization. Usually used for capturing the heihgt of the Lysozym peak.
+    </div>
+
+    <div id = 'tt_range_second_corr' hidden>
+           Interval for y dilation correction. 
+           By defaut it is 
+           [max of  Normalization range , min of  Analysis range]
+    </div>
+
+    <div id = 'tt_speed' hidden>
+           Parameter for improving the convergence of the algorithm. 
+           The higher the speed the more tangent will be the baseline in a reduce number of iterations.
+    </div>
+
+    <div id = 'tt_chunks' hidden>
+           Number of chunks dividing the baseline.
+    </div>
+
+    <div id = 'tt_iter' hidden>
+           Number of iterations. The more iterations the more tensed and smooth will be the baseline.
+    </div>
+
+   <script >
+
+   //----- Panel proc_options
+
+   $('#proc_options').click(function(){$('#options').toggle()})
+   $('.params_options').draggable()
+   $('.options').toggle()
+   $('#options_inside').click(function(){$('.options').toggle()})
+   
+   $('.options').draggable()
+
+   //--- makeplate
+
+   $('#butt_makeplate').click(function(){
+        $('#make_plate').submit()
+        }) // end click
+
+   //---  param baseline
+
+   $('.parambl').css({'width':'45px'})
+
+   //---  Range
+
+   $('.range').css({'width':'65px'})
+
+   //---  Processing name
+
+   $('#name_processing').css({'margin-left' : '-40px', 'width':'140px', 'height':'30px'})
+
+   //---  Peptide identifiers
+
+   $('#pepidentif').css({'margin-left' : '-40px', 'width':'140px', 'height':'30px'})
+
+   //---  Tooltip
+   
+    $('#ttip').hide() // Tooltip for explanations
+    
+    /*
+
+    Tooltip hoover
+
+    */
+
+    make_ttip()
+
+   //----- activate deactivate tooltips
+
+    $('#ttip').hide()       // begin without tooltips
+    show_tooltips = false   // show or hide tooltips
+
+     $('#trig_ttip').click(function(){
+        //----- deactivate 
+        if (show_tooltips){            
+            $('.ttip').hover(function(){
+              $('#ttip').hide()         
+            })
+            show_tooltips = false
+        } // end if
+        //----- activate 
+        else{
+            $('.ttip').hover(function(){
+              $('#ttip').show()
+              // make_ttip()
+              })
+            show_tooltips = true
+        } // end else
+     
+    })
+
+
+
+   </script>
+   
+
+    <h1></h1>
+    <!-- Footer -->
+    {% include 'footer.html' %}
+
+</body>
+</html>

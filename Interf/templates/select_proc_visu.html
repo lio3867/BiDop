@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Choose between processing or visualization-->
+
+{% include 'head_firstpage.html' %}
+
+
+
+<!-- css -->
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+
+
+
+
+<style>
+
+/*
+Selection between processing and visualization
+*/
+
+div.select{
+    position: fixed;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    /*box-shadow: 0.5em 0.5em 0.7em;*/
+    top: 270px;
+    left: 50%;
+    margin-left: -130px;
+    height:330px;
+    width:300px;
+    background-color: white; /*#ddffcc*/
+    font-size:85%;
+    }
+
+</style>
+
+<body>
+
+    <!-- Page Header -->
+    {% include 'header.html' %}
+    <!-- Page Body-->
+    
+    <div class="container select">
+        
+        <h1>
+
+             </h1>
+
+        <!-- Go to processing -->
+    
+        <div class="container">
+            <h1> </h1>
+            <form action="/ask_param" >
+            <i class="fa fa-cog fa-2x"  style="vertical-align: middle"  aria-hidden="true"> &nbsp&nbsp </i>
+            <input name="choosefolder" style="font-size:90%; left: 200px; color:#ff9933; " type="submit" class="btn btn-default" value = "1. Processing">
+            </form>
+        </div>
+        
+        </br>
+        
+        <!-- Go to visualization -->
+    
+        <div class="container">
+            <h1> </h1>
+            <form action="/visu" method="post">
+            <i class="fa fa-eye fa-2x" style="vertical-align: middle"  aria-hidden="true"> &nbsp&nbsp  </i>
+            <input name="chosedataset" style="font-size:90% ; color: #99004d" type="submit" class="btn btn-default" value = "2. Visualization">
+            </form>
+        </div>
+    
+        </br>
+        
+        <!-- Shut down the interface -->
+    
+        <div class="container">
+            <h1> </h1>
+            <form action="/shutdown" method="post">
+            <input style="font-size:90%; bottom:20px; margin-left:70px " type="submit" class="btn btn-default" value = " Quit" >
+            </form>
+        </div>
+        
+    </div> <!-- end div select -->
+
+    <h1></h1>
+    <!-- Footer -->
+    {% include 'footer.html' %}
+
+</body>
+</html>

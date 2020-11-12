@@ -1,0 +1,535 @@
+.navbar {
+  background-color: #ffffff; /*#E6E6E6*/
+  /*box-shadow: 0.5em 0.5em 0.7em;*/
+}
+
+.well {
+fill: #e6ffe6 ;   /* #ebfafa  #a3c2c2 #ccffcc #e6ffe6 */
+stroke: #a3c2c2;
+}
+
+.selected {
+fill: #2f225d;
+stroke: #2f225d;
+}
+
+.axis {
+font: 10px sans-serif;
+}
+
+p {
+font: 12px sans-serif;
+margin: 0 0 2px 0;
+padding: 0;
+}
+
+.clear-button {
+font: 14px sans-serif;
+cursor: pointer;
+}
+
+.axis path,
+.axis line {
+fill: none;
+stroke: #000;
+shape-rendering: crispEdges;
+}
+
+.brush .extent {
+stroke: #fff;
+fill-opacity: .125;
+shape-rendering: crispEdges;
+}
+  /*
+  Panel for the plate
+  Contains all the wells
+  */
+  div.div_plate {
+      position: fixed;
+      padding-left: 0px;
+      padding-right: 20px;
+      padding-bottom: 20px;
+      box-shadow: 0.5em 0.5em 0.7em;
+      top: 70px;
+      left: 0px;
+      height: 360px;
+      width : 600px;
+      background-color: #FFF;
+      font-size:85%;
+      /*opacity : 0.3;*/
+  }
+
+  /*
+  Panel for changing the type of the plate 96 or 384
+  */
+
+  div.type_plate {
+      position: fixed;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 20px;
+      box-shadow: 0.5em 0.5em 0.7em;
+      top: 150px;
+      left: 300px;
+      max-height: 500px;
+      background-color:#FFCC99; 
+      font-size:85%;
+  }
+  
+  /*
+  Panel to know if interaction with Plate is OK
+  */
+
+  div.interact {
+      position: fixed;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 20px;
+      box-shadow: 0.5em 0.5em 0.7em;
+      left: 20px;
+      top: 20px;
+      height: 40px;
+      width:  20px;
+      background-color:#008ae6; 
+      font-size:85%;
+  }
+
+  /*
+  Panel containing the bokeh files
+  */
+
+  div.controls{
+      position: fixed;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 20px;
+      padding-top: 20px;
+      box-shadow: 0.5em 0.5em 0.7em;
+      top : 70px;
+      left: 620px;
+      height:710px;
+      width:470px;
+      background-color: #c6ecc6; /*#808080; */
+      font-size:85%;
+      z-index: 5;
+      }
+
+  div.controls_switch_listmolec{
+      position: fixed;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 20px;
+      padding-top: 10px;
+      /*box-shadow: 0.5em 0.5em 0.7em;*/
+      top : 70px;
+      left: 620px;
+      height: 40px;
+      width: 470px;
+      background-color: #b3e6b3; /*#ffcccc; /* #c6ecc6; /*#808080; */
+      font-size:85%;
+      z-index: 6;
+      }
+
+  /*
+  Panel completing controls
+  */
+
+  div.controls_addons{
+      position: fixed;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-bottom: 20px;
+      padding-top: 20px;
+      box-shadow: 0.5em 0.5em 0.7em;
+      top : 130px;
+      left: 1000px;
+      height:140px;
+      width: 120px;
+      background-color:  #79d2a6 ; /* #1aff1a; /*#e6b3cc; /* #d1e0e0; /*#c6ecc6; #808080; */
+      font-size:85%;
+      text-align: center;
+      opacity:1;
+      z-index: 61;
+      }
+
+  /*
+  Panel for navigating through different kinds of baseline.
+  */
+
+  div.controls_baseline{
+      position: fixed;
+      padding-left: 0px;
+      padding-right: 20px;
+      padding-bottom: 20px;
+      padding-top: 20px;
+      box-shadow: 0.5em 0.5em 0.7em;
+      top : 100px;
+      left: 600px;
+      height:150px;
+      width: 60px;
+      background-color:  #79d2a6 ; /* #1aff1a; /*#e6b3cc; /* #d1e0e0; /*#c6ecc6; #808080; */
+      font-size:85%;
+      text-align: center;
+      opacity:1;
+      z-index: 61;
+      }
+
+  /*
+  Shortcut keys for interacting with visualization part.
+  */
+
+  div.shortcuts{
+       position: fixed;
+       padding-left: 20px;
+       padding-right: 20px;
+       padding-bottom: 20px;
+       padding-top: 20px;
+       box-shadow: 0.5em 0.5em 0.7em;
+       top: 400px;
+       left: 100px;
+       height:150px;
+       width:300px;
+       background-color:#ccffcc; 
+       font-size:100%;
+       overflow: scroll;
+      }
+ 
+  /*
+  List wells with molecules
+  */
+
+  div.wellsmolec{
+      position: fixed;
+      padding-left: 10px;
+      padding-right: 30px;
+      padding-bottom: 20px;
+      padding-top: 20px;
+      box-shadow: 0.5em 0.5em 0.7em;
+      top: 70px;
+      /*left: 1110px;*/
+      left: 620px;
+      max-height:600px;
+      max-width:420px;
+      background-color: #ffd1b3 ; /*#ddcccc;*/ #ffe6e6 #ffd1b3
+      font-size:85%;
+      overflow: scroll;
+      text-align: left;
+      z-index: 15;
+      opacity: 0.9;
+      }
+  
+  /*
+  List of the folders with processed data
+  */
+
+  p.italic {
+  font-style: italic;
+  }
+
+  /*
+  Panel containing all the processed datasets
+  */
+  
+  div.list_proc{           
+      position: fixed;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 20px;
+      padding-top: 20px;
+      box-shadow: 0.5em 0.5em 0.7em;
+      top: 440px;
+      left: 80px;
+      height:350px;
+      width:470px;
+      background-color: #fff0b3; /*#ebebe0;*/ 
+      overflow: scroll;
+      font-family: 'Enriqueta', serif;
+      font-size: 15px;
+      width: auto;
+      }
+
+  /*
+  Bar for showing hiding the panel list_proc
+  */
+
+  div.show_list_proc{       
+      position: fixed;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 2px;
+      padding-top: 2px;
+      box-shadow: 0.5em 0.5em 0.7em;
+      top: 440px;
+      left: 5px;
+      height:30px;
+      width:590px;
+      background-color: #fff0b3; /*#ebebe0; */ 
+      z-index: 10;
+      text-align: center;
+      font-family: 'Enriqueta', serif;
+      /*font-family: 'Londrina', serif;*/
+      font-size: 16px;
+      }
+
+  /*
+  Gels
+  keywords : divgel, gel
+  */
+
+  div.gel{ 
+      display: inline;    
+      position: relative;
+      margin-left: 10px;
+      top: 30px;
+      left: 1090px;
+      height:600px;
+      width:200px;
+      background-color: #ffffff; 
+      z-index: 60;
+      font-family: 'Enriqueta', serif;
+      font-size: 16px;
+      }
+
+  .title_gel{ 
+      padding-bottom: 15px;
+      position: fixed;
+      top: 80px;
+      left: 1100px;
+      height:50px;
+      width:80px;
+      background-color: grey; /* #000000; #ebebe0; */ 
+      z-index: 60;
+      text-align: center;
+      font-family: 'Enriqueta', serif;
+      font-size: 16px;
+      }
+
+  .title_gel_text{
+    word-spacing: 2px;
+    /*background-color: red;*/
+    /*text-indent: 5em;*/
+  }
+
+  /*
+  Tooltip with BI and molec name when hovering the cells
+  */
+
+  div.divhov{              
+      position: fixed;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 10px;
+      padding-top: 10px;
+      box-shadow: 0.5em 0.5em 0.7em;
+      height:60px;
+      width:200px;
+      background-color: #ebebe0; 
+      text-align: center;
+      z-index: 30;
+      opacity: 0.9;
+      }
+
+  /*
+  Panel with the parameters for the reprocessing 
+  */
+
+  div.reproc{      
+      position: fixed;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 20px;
+      padding-top: 20px;
+      font: 12px sans-serif;
+      box-shadow: 0.5em 0.5em 0.7em;
+      top: 70px;
+      left: 300px;
+      height:470px;
+      width:300px;
+      background-color: #99e699;  
+      z-index: 40;
+      text-align: center;
+      }
+
+  /*
+  Alert when erasing datasets.
+  */
+
+  div.alert_erase{      
+      position: fixed;
+      padding-left: 25px;
+      padding-right: 25px;
+      padding-bottom: 25px;
+      padding-top: 25px;
+      box-shadow: 0.5em 0.5em 0.7em;
+      top: 500px;
+      left: 200px;
+      height:120px;
+      width:200px;
+      /*vertical-align: middle;*/
+      background-color: #ff9999;  
+      z-index: 20;
+      text-align: center;
+      opacity: 0.9;
+      }
+
+  /*
+  Panel for graph superposition
+  */
+
+  div.superimpose{      
+      position: fixed;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 20px;
+      padding-top: 20px;
+      box-shadow: 0.5em 0.5em 0.7em;
+      top: 100px;
+      left: 40px;
+      height:700px;
+      width:800px;
+      background-color: #d27979; /* #800000;  #f2d9d9;  #ff9999 ;  #ccf5ff; #99e699;  */
+      z-index: 40;
+      text-align: center;
+      }
+
+  #list_molec_manyplt{
+      position: relative;
+      top: -300px;
+      right: -200px;
+  }
+
+  #close_superimp{
+      position: relative;
+      padding-left: 60px;
+      padding-right: 20px;
+      padding-bottom: 20px;
+      padding-top: 20px;
+   /*   top: -900px;
+*/        left: 200px;
+  }
+
+  /*
+  Alert for renaming the dataset
+  */
+
+  div.newname{      
+      position: fixed;
+      padding-left: 25px;
+      padding-right: 25px;
+      padding-bottom: 25px;
+      padding-top: 25px;
+      box-shadow: 0.5em 0.5em 0.7em;
+      top: 500px;
+      left: 120px;
+      height:120px;
+      width:350px;
+      /*vertical-align: middle;*/
+      background-color: #33cc33; /*#ff9999; */ 
+      z-index: 20;
+      text-align: center;
+      opacity: 0.9;
+      }
+
+  /*
+  Tooltips for explanations
+  */
+
+  div.divttip{              
+      position: fixed;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 10px;
+      padding-top: 10px;
+      box-shadow: 0.5em 0.5em 0.7em;
+      left: 1000px;
+      width:200px;
+      background-color: #ebebe0; 
+      text-align: center;
+      z-index: 100;
+      opacity: 0.9;
+      }
+
+  /*
+  Reprocessing done
+  */
+
+  div.reproc_ok{              
+      position: relative;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 10px;
+      padding-top: 10px;
+      box-shadow: 0.5em 0.5em 0.7em;
+      top: 0px;
+      left: 500px;
+      height:100px;
+      width:200px;
+      background-color: #ebebe0; 
+      text-align: center;
+      z-index: 100;
+      opacity: 0.9;
+      }
+
+  .slack{    /*icon Slack*/
+    background-image: url('/static/img/Slack-icon-small.png');
+    background-position: left  bottom 16px;
+    background-repeat: no-repeat;
+    padding-left: 20px;       /* Adjust according to image size to push text across. */
+  }
+  .baseline{     /*icon Baseline*/
+    background-image: url('/static/img/baseline-small.png');
+    background-position: left  bottom 0px;
+    background-repeat: no-repeat;
+    padding-left: 20px;        /* Adjust according to image size to push text across. */
+  }
+  .dilation{    /*icon dilation*/
+    background-image: url('/static/img/dilation-small.png');
+    background-position: left  bottom 7px;
+    background-repeat: no-repeat;
+    padding-left: 20px;       /* Adjust according to image size to push text across. */
+  }
+
+  /* Dilation */
+
+  .context-menu-item.context-menu-icon-dilation { padding: 4px 30px; }
+  .context-menu-item.context-menu-icon-dilation::before {
+        content: '';
+        display: inline-block;
+        background-image: url('/static/img/dilation-small.png');
+        margin-left: 5px;
+        background-position: -145px -62px;;
+        width: 10px;
+        height: 10px;
+      }
+
+  /* Baseline */
+
+  .context-menu-item.context-menu-icon-baseline { padding: 4px 30px; }
+  .context-menu-item.context-menu-icon-baseline::before {
+        content: '';
+        display: inline-block;
+        background-image: url('/static/img/baseline-small.png');
+        margin-left: 5px;
+        background-position: -145px -62px;;
+        width: 10px;
+        height: 10px;
+      }
+
+  .ui-icon[class*=" icon-"] {
+      /* Remove the jQuery UI Icon */
+      background: none repeat scroll 0 0 transparent;
+      /* Remove the jQuery UI Text Indent */
+      text-indent: 0;
+      /* Bump it up - jQuery UI is -8px */
+      margin-top: -0.5em;
+  }
+
+  .ui-button-icon-only .ui-icon[class*=" icon-"] {
+      /* Bump it - jQuery UI is -8px */
+      margin-left: -7px;
+  }
+
+  /* Allow use of icon-large to be properly aligned */
+  .ui-icon.icon-large {
+      margin-top: -0.75em;
+  }

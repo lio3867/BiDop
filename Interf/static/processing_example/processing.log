@@ -1,0 +1,239 @@
+ 2016-07-29 11:08:06,469 -   
+        
+                             ########### nbgroup 1  ########
+                
+            
+ 2016-07-29 11:08:07,640 -  
+        
+        #### Processings ####
+        
+        
+ 2016-07-29 11:08:07,641 -  Baseline parameters:
+                            iterations : 2
+                            nbchunks : 50
+                            secondpower : 2
+                            polynomial degree : 1
+                
+ 2016-07-29 11:08:07,642 -  Steps
+ 2016-07-29 11:08:07,926 -      * performing translation 
+ 2016-07-29 11:08:07,968 -      * performing translation 
+ 2016-07-29 11:08:08,004 -      * performing translation 
+ 2016-07-29 11:08:08,045 -      * performing dilation
+ 2016-07-29 11:08:08,944 -  
+        
+        ### Binding index ###
+        
+        
+ 2016-07-29 11:08:08,947 -  BIs
+ 2016-07-29 11:08:08,949 -      * BI (position) : 0.2709 
+ 2016-07-29 11:08:08,949 -      * BI (zone) : 0.2709 
+ 2016-07-29 11:08:08,949 -  
+        
+        ####### Cumulative Timings ######
+        
+ 2016-07-29 11:08:08,950 -  * Times
+ 2016-07-29 11:08:08,950 -      * time after preprocessing : 1.4571 s 
+ 2016-07-29 11:08:08,950 -      * time after translation_group : 1.5743 s 
+ 2016-07-29 11:08:08,950 -      * time after dilation : 1.6249 s 
+ 2016-07-29 11:08:08,951 -      * time after noise and BI : 2.4802 s 
+ 2016-07-29 11:08:08,951 -  -------------
+ 2016-07-29 11:08:08,955 -   
+        
+                             ########### nbgroup 2  ########
+                
+            
+ 2016-07-29 11:08:10,225 -  
+        
+        #### Processings ####
+        
+        
+ 2016-07-29 11:08:10,226 -  Baseline parameters:
+                            iterations : 2
+                            nbchunks : 50
+                            secondpower : 2
+                            polynomial degree : 1
+                
+ 2016-07-29 11:08:10,226 -  Steps
+ 2016-07-29 11:08:10,454 -      * performing translation 
+ 2016-07-29 11:08:10,496 -      * performing translation 
+ 2016-07-29 11:08:10,536 -      * performing translation 
+ 2016-07-29 11:08:10,579 -      * performing dilation
+ 2016-07-29 11:08:11,208 -  
+        
+        ### Binding index ###
+        
+        
+ 2016-07-29 11:08:11,311 -  BIs
+ 2016-07-29 11:08:11,312 -      * BI (position) : 0.1098 
+ 2016-07-29 11:08:11,312 -      * BI (zone) : 0.1098 
+ 2016-07-29 11:08:11,313 -  
+        
+        ####### Cumulative Timings ######
+        
+ 2016-07-29 11:08:11,315 -  * Times
+ 2016-07-29 11:08:11,315 -      * time after preprocessing : 1.499 s 
+ 2016-07-29 11:08:11,315 -      * time after translation_group : 1.6216 s 
+ 2016-07-29 11:08:11,315 -      * time after dilation : 1.6468 s 
+ 2016-07-29 11:08:11,316 -      * time after noise and BI : 2.3573 s 
+ 2016-07-29 11:08:11,316 -  -------------
+ 2016-07-29 11:08:11,321 -   
+        
+                             ########### nbgroup 3  ########
+                
+            
+ 2016-07-29 11:08:12,490 -  
+        
+        #### Processings ####
+        
+        
+ 2016-07-29 11:08:12,491 -  Baseline parameters:
+                            iterations : 2
+                            nbchunks : 50
+                            secondpower : 2
+                            polynomial degree : 1
+                
+ 2016-07-29 11:08:12,491 -  Steps
+ 2016-07-29 11:08:12,716 -      * performing translation 
+ 2016-07-29 11:08:12,757 -      * performing translation 
+ 2016-07-29 11:08:12,792 -      * performing translation 
+ 2016-07-29 11:08:12,826 -      * performing dilation
+ 2016-07-29 11:08:13,697 -  
+        
+        ### Binding index ###
+        
+        
+ 2016-07-29 11:08:13,698 -  BIs
+ 2016-07-29 11:08:13,698 -      * BI (position) : 0.6957 
+ 2016-07-29 11:08:13,699 -      * BI (zone) : 0.6947 
+ 2016-07-29 11:08:13,699 -  
+        
+        ####### Cumulative Timings ######
+        
+ 2016-07-29 11:08:13,699 -  * Times
+ 2016-07-29 11:08:13,699 -      * time after preprocessing : 1.3943 s 
+ 2016-07-29 11:08:13,700 -      * time after translation_group : 1.5029 s 
+ 2016-07-29 11:08:13,700 -      * time after dilation : 1.5367 s 
+ 2016-07-29 11:08:13,700 -      * time after noise and BI : 2.3778 s 
+ 2016-07-29 11:08:13,700 -  -------------
+ 2016-07-29 11:08:13,705 -   
+        
+                             ########### nbgroup 4  ########
+                
+            
+ 2016-07-29 11:08:14,884 -  
+        
+        #### Processings ####
+        
+        
+ 2016-07-29 11:08:14,885 -  Baseline parameters:
+                            iterations : 2
+                            nbchunks : 50
+                            secondpower : 2
+                            polynomial degree : 1
+                
+ 2016-07-29 11:08:14,885 -  Steps
+ 2016-07-29 11:08:15,116 -      * performing translation 
+ 2016-07-29 11:08:15,154 -      * performing translation 
+ 2016-07-29 11:08:15,187 -      * performing translation 
+ 2016-07-29 11:08:15,220 -      * performing dilation
+ 2016-07-29 11:08:16,091 -  
+        
+        ### Binding index ###
+        
+        
+ 2016-07-29 11:08:16,093 -  BIs
+ 2016-07-29 11:08:16,093 -      * BI (position) : 0.17 
+ 2016-07-29 11:08:16,093 -      * BI (zone) : 0.17 
+ 2016-07-29 11:08:16,093 -  
+        
+        ####### Cumulative Timings ######
+        
+ 2016-07-29 11:08:16,094 -  * Times
+ 2016-07-29 11:08:16,094 -      * time after preprocessing : 1.4104 s 
+ 2016-07-29 11:08:16,094 -      * time after translation_group : 1.5122 s 
+ 2016-07-29 11:08:16,094 -      * time after dilation : 1.5384 s 
+ 2016-07-29 11:08:16,094 -      * time after noise and BI : 2.3882 s 
+ 2016-07-29 11:08:16,095 -  -------------
+ 2016-07-29 11:08:16,099 -   
+        
+                             ########### nbgroup 5  ########
+                
+            
+ 2016-07-29 11:08:17,341 -  
+        
+        #### Processings ####
+        
+        
+ 2016-07-29 11:08:17,342 -  Baseline parameters:
+                            iterations : 2
+                            nbchunks : 50
+                            secondpower : 2
+                            polynomial degree : 1
+                
+ 2016-07-29 11:08:17,342 -  Steps
+ 2016-07-29 11:08:17,570 -      * performing translation 
+ 2016-07-29 11:08:17,610 -      * performing translation 
+ 2016-07-29 11:08:17,646 -      * performing translation 
+ 2016-07-29 11:08:17,678 -      * performing dilation
+ 2016-07-29 11:08:18,311 -  
+        
+        ### Binding index ###
+        
+        
+ 2016-07-29 11:08:18,312 -  BIs
+ 2016-07-29 11:08:18,313 -      * BI (position) : 0.811 
+ 2016-07-29 11:08:18,313 -      * BI (zone) : 0.8109 
+ 2016-07-29 11:08:18,313 -  
+        
+        ####### Cumulative Timings ######
+        
+ 2016-07-29 11:08:18,313 -  * Times
+ 2016-07-29 11:08:18,314 -      * time after preprocessing : 1.4705 s 
+ 2016-07-29 11:08:18,314 -      * time after translation_group : 1.5769 s 
+ 2016-07-29 11:08:18,314 -      * time after dilation : 1.614 s 
+ 2016-07-29 11:08:18,314 -      * time after noise and BI : 2.214 s 
+ 2016-07-29 11:08:18,314 -  -------------
+ 2016-07-29 11:08:18,320 -   
+        
+                             ########### nbgroup 6  ########
+                
+            
+ 2016-07-29 11:08:19,806 -  
+        
+        #### Processings ####
+        
+        
+ 2016-07-29 11:08:19,807 -  Baseline parameters:
+                            iterations : 2
+                            nbchunks : 50
+                            secondpower : 2
+                            polynomial degree : 1
+                
+ 2016-07-29 11:08:19,807 -  Steps
+ 2016-07-29 11:08:20,037 -      * performing translation 
+ 2016-07-29 11:08:20,071 -      * performing translation 
+ 2016-07-29 11:08:20,097 -      * performing translation 
+ 2016-07-29 11:08:20,128 -      * performing dilation
+ 2016-07-29 11:08:20,742 -  
+        
+        ### Binding index ###
+        
+        
+ 2016-07-29 11:08:20,744 -  BIs
+ 2016-07-29 11:08:20,744 -      * BI (position) : -0.0497 
+ 2016-07-29 11:08:20,744 -      * BI (zone) : -0.0511 
+ 2016-07-29 11:08:20,745 -  
+        
+        ####### Cumulative Timings ######
+        
+ 2016-07-29 11:08:20,745 -  * Times
+ 2016-07-29 11:08:20,745 -      * time after preprocessing : 1.7171 s 
+ 2016-07-29 11:08:20,746 -      * time after translation_group : 1.8065 s 
+ 2016-07-29 11:08:20,746 -      * time after dilation : 1.8337 s 
+ 2016-07-29 11:08:20,746 -      * time after noise and BI : 2.4252 s 
+ 2016-07-29 11:08:20,746 -  -------------
+ 2016-07-29 11:08:20,747 -  
+    
+            ####  Processing time : 14.28 s #### 
+            
+            

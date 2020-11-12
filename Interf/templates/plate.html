@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title> Processing visualization </title>
+
+<head>
+
+{% include 'head.html' %}
+<script src="/static/js/plate_socket.js"></script>
+<script src="/static/js/plate_colors.js"></script>
+
+</head>
+
+<body>
+
+<script>
+
+var exec_half = 1               // trick for making a move of one well after two plate refreshings
+var state_ctrl_proc = "proc"    // variable for staying in preprocessing mode or final result mode.
+var show_tooltips = true        // Control the tooltips
+    
+//====== Nav bar
+
+navbar()
+
+/*
+Builds the html list with all the datasets processed.
+*/
+
+var ol = $('<ol/>')
+{% for addr in addrproc %}
+chckbox_proc = $('<input/>').attr('class', 'chckgrp')
+                            .attr('name', 'chckgrp_{{addr}}')
+                            .attr('id', 'box_{{addr}}')
+                            .attr('type', "checkbox").css({'left':'280px', 'top':'-10px'})
+var name_proc = $('<span/>').addClass('name_proc italic')
+                         .attr('id', '{{addr}}')         // addr is the name of the processed dataset
+                         .text("{{addr}}  ".slice(11))
+var li = $('<li/>').append(name_proc)                     // Results folder name in list elem
+li.append(chckbox_proc)    
+ol.append(li)
+{% endfor %}
+
+navbar()                        // Initialize navbar
+list_processings(ol)            // Initialize list_processings
+visualize('processing_example') // Initializing on the default dataset.
+
+  $(document).ready(function(){
+
+      // --------  Scroll
+
+      lscrolls = ['shortcuts', 'wellsmolec']
+      for (i in lscrolls){
+          Ps.initialize(document.querySelector('#'+lscrolls[i]))
+      }
+       $('.selectpicker').selectpicker();
+
+  });  // end document ready
+
+      
+</script>
+
+</body>
